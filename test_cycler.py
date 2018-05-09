@@ -128,7 +128,7 @@ def test_mul_fails():
     pytest.raises(TypeError, mul, c1,  [])
 
 
-def test_getitem():
+def test_getitem_slice():
     c1 = cycler(3, range(15))
     widths = list(range(15))
     for slc in (slice(None, None, None),
@@ -138,10 +138,15 @@ def test_getitem():
         yield _cycles_equal, c1[slc], cycler(3, widths[slc])
 
 
-def test_fail_getime():
+def test_getitem_one():
+    c1 = cycler(3, range(15))
+    assert c1[7] == {3: 7}
+
+
+def test_fail_getitem():
     c1 = cycler(lw=range(15))
-    pytest.raises(ValueError, Cycler.__getitem__, c1, 0)
-    pytest.raises(ValueError, Cycler.__getitem__, c1, [0, 1])
+    pytest.raises(ValueError, Cycler.__getitem__, c1, -1)
+    pytest.raises(TypeError, Cycler.__getitem__, c1, [0, 1])
 
 
 def _repr_tester_helper(rpr_func, cyc, target_repr):

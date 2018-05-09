@@ -219,6 +219,17 @@ Cycles can be sliced with :obj:`slice` objects
 
 to return a sub-set of the cycle as a new `Cycler`.
 
+
+Indexing
+--------
+
+Indexing a cycle with a (non-negative) integer returns the corresponding entry.
+
+.. ipython:: python
+
+   color_cycle[1]
+
+
 Inspecting the `Cycler`
 -----------------------
 

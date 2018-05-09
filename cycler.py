@@ -44,9 +44,9 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import six
-from itertools import product, cycle
+from itertools import cycle, islice, product
 from six.moves import zip, reduce
-from operator import mul, add
+from operator import mul, add, index
 import copy
 
 __version__ = '0.10.0'
@@ -223,7 +223,8 @@ class Cycler(object):
             return reduce(add, (_cycler(k, v[key])
                                 for k, v in six.iteritems(trans)))
         else:
-            raise ValueError("Can only use slices with Cycler.__getitem__")
+            key = index(key)  # bugs.python.org/issue30537 (Py<3.7)
+            return next(islice(self(), key, None))
 
     def __iter__(self):
         if self._right is None:
